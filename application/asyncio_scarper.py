@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 
 from domain.car_details import CarDetailsRepository, CarDetailsUncommited
 
+from .generate_db import truncate_database
+
 
 class Scraper:
     start_url: str = f'https://auto.ria.com/uk/search/?lang_id=4&page=0&countpage=100&indexName=auto&custom=1&abroad=2'
@@ -87,6 +89,9 @@ class Scraper:
     async def aiohttp_event_loop(self):
         connector = aiohttp.TCPConnector(limit=25)
         timeout = aiohttp.ClientTimeout(total=1800)
+
+        loop = asyncio.get_event_loop()
+        loop.run_in_executor(None, truncate_database)
 
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             tasks = []
