@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  scraping:
+    build: ./
+    volumes:
+      - .:/auto_ria_scraping
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres:15.3-alpine
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=foo
