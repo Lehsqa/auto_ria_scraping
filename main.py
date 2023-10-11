@@ -1,7 +1,7 @@
 import schedule
 from time import sleep
 
-from application.asyncio_scarper import Scraper
+from application.asyncio_scraper import Scraper
 from dump.dump import run_dump
 
 
