@@ -13,5 +13,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "application/generate_db.py" ]
 CMD [ "python", "main.py" ]

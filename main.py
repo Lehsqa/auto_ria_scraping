@@ -4,6 +4,7 @@ from time import sleep
 from application.asyncio_scarper import Scraper
 from dump.dump import run_dump
 
+
 if __name__ == '__main__':
     s = Scraper()
 
