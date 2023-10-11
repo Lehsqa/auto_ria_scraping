@@ -8,6 +8,7 @@ import aiohttp
 from aiohttp.client_exceptions import ClientPayloadError, ServerDisconnectedError
 from bs4 import BeautifulSoup
 
+from config import CLIENT_TIMEOUT, TCP_CONNECTOR, SEMAPHORE
 from domain.car_details import CarDetailsRepository, CarDetailsUncommited
 from infrastructure.database import engine, Base
 
@@ -87,9 +88,9 @@ class Scraper:
                 return None
 
     async def aiohttp_event_loop(self):
-        semaphore = asyncio.Semaphore(20)
-        connector = aiohttp.TCPConnector(limit=25)
-        timeout = aiohttp.ClientTimeout(total=1800)
+        semaphore = asyncio.Semaphore(SEMAPHORE)
+        connector = aiohttp.TCPConnector(limit=TCP_CONNECTOR)
+        timeout = aiohttp.ClientTimeout(total=CLIENT_TIMEOUT)
 
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)

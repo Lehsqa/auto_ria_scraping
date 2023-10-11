@@ -7,10 +7,12 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
+from config import MAX_OVERFLOW, POOL_SIZE
 from infrastructure.errors import DatabaseError
 
 engine: AsyncEngine = create_async_engine(
-    os.environ.get("DATABASE_URL"), future=True, pool_pre_ping=True, echo=False, pool_size=20, max_overflow=-1
+    os.environ.get("DATABASE_URL"), future=True, pool_pre_ping=True, echo=False,
+    pool_size=POOL_SIZE, max_overflow=MAX_OVERFLOW
 )
 async_session = async_sessionmaker(
     engine, expire_on_commit=False, autoflush=False
